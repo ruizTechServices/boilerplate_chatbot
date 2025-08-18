@@ -1,6 +1,5 @@
 // tests/testUpsert.ts
 import 'dotenv/config'
-import { indexDocument } from '@/lib/functions/pinecone/upsertVectors'
 
 const testDocument = {
   docId: 'test-doc-002',
@@ -12,10 +11,17 @@ const testDocument = {
 async function testIndexDocument() {
   console.log('🔍 Testing indexDocument function...')
   
+  const hasKey = !!process.env.PINECONE_API_KEY
+  if (!hasKey) {
+    console.log('⏭️ Skipping Pinecone upsert test (no PINECONE_API_KEY).')
+    process.exit(0)
+  }
+
   try {
     console.log(`📄 Document ID: ${testDocument.docId}`)
     console.log(`📝 Content length: ${testDocument.content.length} characters`)
     
+    const { indexDocument } = await import('@/lib/functions/pinecone/upsertVectors')
     await indexDocument(testDocument.docId, testDocument.content)
     
     console.log('✅ Document successfully indexed to Pinecone')

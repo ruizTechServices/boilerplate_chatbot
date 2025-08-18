@@ -10,7 +10,6 @@ import mistralClient from '../lib/clients/mistral/client'
 import anthropicClient from '../lib/clients/anthropic/client'
 import huggingfaceClient from '../lib/clients/huggingface/client'
 import xaiClient from '../lib/clients/xai/client'
-import pineconeClient from '../lib/clients/pinecone/client'
 import { createClient as supabaseClient } from '../lib/clients/supabase/client'
 
 const tests: Array<{ name: string; client: any; keyEnv: string }> = [
@@ -20,7 +19,6 @@ const tests: Array<{ name: string; client: any; keyEnv: string }> = [
     { name: 'Anthropic', client: anthropicClient, keyEnv: 'ANTHROPIC_API_KEY' },
     { name: 'HuggingFace', client: huggingfaceClient, keyEnv: 'HF_API_KEY' },
     { name: 'xAI', client: xaiClient, keyEnv: 'XAI_API_KEY' },
-    { name: 'Pinecone', client: pineconeClient, keyEnv: 'PINECONE_API_KEY' },
     { name: 'Supabase', client: supabaseClient, keyEnv: 'SUPABASE_API_KEY' },
 ]
 
@@ -38,4 +36,25 @@ for (const { name, client, keyEnv } of tests) {
     }
 }
 
-console.log('\n✅ All client checks complete')
+// Handle Pinecone separately to avoid import-time failure when key is missing.
+;(async () => {
+    const keyEnv = 'PINECONE_API_KEY'
+    console.log(`\n=== Pinecone ===`)
+    const envPresent = !!process.env[keyEnv]
+    console.log(`• API key (${keyEnv}) configured:`, envPresent)
+    if (!envPresent) {
+        console.log('⏭️ Skipping Pinecone client check (no key).')
+        return
+    }
+    try {
+        const { default: pineconeClient } = await import('../lib/clients/pinecone/client')
+        console.log('• Client initialized:', !!pineconeClient)
+        console.log('• Client type:', typeof pineconeClient)
+        console.log('• Constructor:', pineconeClient.constructor?.name)
+    } catch (err) {
+        console.error('❌ Error inspecting Pinecone client:', err)
+        process.exit(1)
+    }
+})().finally(() => {
+    console.log('\n✅ All client checks complete')
+})
