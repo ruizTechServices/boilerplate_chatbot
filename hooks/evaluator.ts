@@ -18,7 +18,7 @@ type Evaluation = {
   formatted: string;
 };
 
-const DEFAULT_MAX_CHARS = 150;
+const DEFAULT_MAX_CHARS = 250;
 
 function clampToChars(s: string, max: number): string {
   if (s.length <= max) return s;
