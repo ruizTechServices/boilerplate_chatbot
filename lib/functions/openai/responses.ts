@@ -1,15 +1,16 @@
-// lib/functions/openai/responses.ts
 import openai from '@/lib/clients/openai/client'
+import type { ResponseCreateParams } from 'openai/resources/responses/responses'
 
 export async function getOpenAICompletion(
   message: string,
   model = 'gpt-4o',
   options?: { system?: string; maxOutputTokens?: number }
 ): Promise<string> {
-  const payload: any = {
+  const payload: ResponseCreateParams = {
     model,
     input: message,
   }
+
   if (options?.system) {
     payload.instructions = options.system
   }

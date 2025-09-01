@@ -1,17 +1,25 @@
-'use client';
+"use client";
 
 import EmbedInput from "@/components/app/chatbot_basic/EmbedInput";
-import ChatContext, { ChatMessage } from "@/components/app/chatbot_basic/ChatContext";
+import ChatContext, {
+  ChatMessage,
+} from "@/components/app/chatbot_basic/ChatContext";
 import generateUUID from "@/lib/functions/generateUUID";
 import { useEffect, useState } from "react";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 export default function ChatbotBasicContainer() {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [models, setModels] = useState<string[]>([]);
   const [selectedModel, setSelectedModel] = useState<string>("gpt-4o");
 
+  // Fetch model list once on mount
   useEffect(() => {
     let cancelled = false;
     (async () => {
@@ -19,25 +27,36 @@ export default function ChatbotBasicContainer() {
         const res = await fetch("/api/openai/models", { cache: "no-store" });
         const data = await res.json();
         const ids: string[] = (data?.models ?? []).filter(allowModel);
-        if (!cancelled) {
-          setModels(ids);
-          if (ids.length && !ids.includes(selectedModel)) setSelectedModel(ids[0]);
-        }
+        if (!cancelled) setModels(ids);
       } catch {
         const fallback = ["gpt-4o", "gpt-4o-mini"].filter(allowModel);
-        if (!cancelled) {
-          setModels(fallback);
-          if (!fallback.includes(selectedModel) && fallback.length) setSelectedModel(fallback[0]);
-        }
+        if (!cancelled) setModels(fallback);
       }
     })();
-    return () => { cancelled = true; };
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
+  // Keep selectedModel synced if it's not in the list
+  useEffect(() => {
+    if (models.length && !models.includes(selectedModel)) {
+      setSelectedModel(models[0]);
+    }
+  }, [models, selectedModel]);
+
   function allowModel(id: string) {
-    const blacklist = ["embedding", "whisper", "tts", "realtime", "moderation", "audio", "clip"];
+    const blacklist = [
+      "embedding",
+      "whisper",
+      "tts",
+      "realtime",
+      "moderation",
+      "audio",
+      "clip",
+    ];
     const lower = id.toLowerCase();
-    return !blacklist.some(b => lower.includes(b));
+    return !blacklist.some((b) => lower.includes(b));
   }
 
   const handleSubmitText = async (text: string) => {
@@ -49,34 +68,42 @@ export default function ChatbotBasicContainer() {
 
     // 3) Get assistant, append, and embed assistant text
     try {
-      const res = await fetch('/api/responses', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const res = await fetch("/api/responses", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: text }),
       });
       if (!res.ok) throw new Error(`Responses API error: ${res.status}`);
       const data = await res.json();
-      const assistantText: string = data?.text ?? '';
+      const assistantText: string = data?.text ?? "";
 
-      const assistantMessage: ChatMessage = { id: generateUUID(), role: 'assistant', text: assistantText };
+      const assistantMessage: ChatMessage = {
+        id: generateUUID(),
+        role: "assistant",
+        text: assistantText,
+      };
       setMessages((prev) => [...prev, assistantMessage]);
 
       // Log assistant embeddings
       try {
-        const embRes = await fetch('/api/embeddings', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+        const embRes = await fetch("/api/embeddings", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ text: assistantText }),
         });
-        if (!embRes.ok) throw new Error(`Embeddings API error: ${embRes.status}`);
+        if (!embRes.ok)
+          throw new Error(`Embeddings API error: ${embRes.status}`);
         const embData = await embRes.json();
-        console.log('Assistant embedding vector length:', embData?.embedding?.length);
-        console.log('Assistant embedding:', embData?.embedding);
+        console.log(
+          "Assistant embedding vector length:",
+          embData?.embedding?.length
+        );
+        console.log("Assistant embedding:", embData?.embedding);
       } catch (embedErr) {
-        console.error('Assistant embedding error:', embedErr);
+        console.error("Assistant embedding error:", embedErr);
       }
     } catch (err) {
-      console.error('Assistant response error:', err);
+      console.error("Assistant response error:", err);
     }
   };
 
@@ -92,7 +119,9 @@ export default function ChatbotBasicContainer() {
               </SelectTrigger>
               <SelectContent>
                 {models.map((m) => (
-                  <SelectItem key={m} value={m}>{m}</SelectItem>
+                  <SelectItem key={m} value={m}>
+                    {m}
+                  </SelectItem>
                 ))}
               </SelectContent>
             </Select>
