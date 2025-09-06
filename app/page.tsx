@@ -3,7 +3,7 @@ import Hero from "../components/app/landing_page/Hero"
 import Description from "../components/app/landing_page/description"
 const items = [
   { label: "Home", href: "/" },
-  { label: "$1 Chatbot", href: "/basic" },
+  { label: "Chatbot", href: "/basic" },
   
 ]
 
