@@ -54,6 +54,17 @@ export default function ChatbotBasicContainer() {
       "moderation",
       "audio",
       "clip",
+      "vision",
+      "image",
+      "computer-use",
+      "codex",
+      "dall-e",
+      "o1",
+      "o3",
+      "search-preview",
+      "transcribe",
+      "pro",
+
     ];
     const lower = id.toLowerCase();
     return !blacklist.some((b) => lower.includes(b));
@@ -109,7 +120,7 @@ export default function ChatbotBasicContainer() {
 
   return (
     <div className="flex flex-col items-center">
-      <div className="flex flex-col items-center w-1/2 gap-4 m-10">
+      <div className="flex flex-col items-center w-1/2 h-screen gap-4 m-10">
         <ChatContext messages={messages} />
         <div className="w-full flex justify-center">
           <div className="w-1/2">

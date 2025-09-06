@@ -6,11 +6,11 @@ export default function Description() {
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6">
-            Unleash the Power of AI
+            Jumpstart Your Chatbot Project
           </h2>
           <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-            Experience the future of intelligent automation with our cutting-edge AI platform. 
-            Transform your workflow, amplify your creativity, and unlock unprecedented possibilities.
+            Launch your next conversational AI with our robust chatbot boilerplate. 
+            Save time, streamline development, and focus on building unique experiences for your users.
           </p>
         </div>
         
@@ -19,10 +19,10 @@ export default function Description() {
             <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-colors">
               <div className="w-6 h-6 bg-primary rounded-sm"></div>
             </div>
-            <h3 className="text-xl font-semibold mb-4 text-foreground">Lightning Fast</h3>
+            <h3 className="text-xl font-semibold mb-4 text-foreground">Ready to Deploy</h3>
             <p className="text-muted-foreground leading-relaxed">
-              Process complex queries in milliseconds with our optimized AI engine. 
-              Experience real-time responses that keep your workflow seamless.
+              Get started instantly with a pre-configured chatbot template. 
+              Deploy to your favorite platform in minutes, not days.
             </p>
           </div>
           
@@ -30,10 +30,10 @@ export default function Description() {
             <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-colors">
               <div className="w-6 h-6 bg-primary rounded-sm"></div>
             </div>
-            <h3 className="text-xl font-semibold mb-4 text-foreground">Always Learning</h3>
+            <h3 className="text-xl font-semibold mb-4 text-foreground">Customizable & Extensible</h3>
             <p className="text-muted-foreground leading-relaxed">
-              Our AI continuously evolves and adapts to your needs, becoming smarter 
-              with every interaction to deliver personalized experiences.
+              Easily adapt the chatbot to your needs. Add new features, integrate APIs, 
+              and personalize the conversation flow with minimal effort.
             </p>
           </div>
           
@@ -41,21 +41,21 @@ export default function Description() {
             <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-colors">
               <div className="w-6 h-6 bg-primary rounded-sm"></div>
             </div>
-            <h3 className="text-xl font-semibold mb-4 text-foreground">Secure & Private</h3>
+            <h3 className="text-xl font-semibold mb-4 text-foreground">Secure & Reliable</h3>
             <p className="text-muted-foreground leading-relaxed">
-              Your data stays protected with enterprise-grade security. We prioritize 
-              privacy while delivering powerful AI capabilities you can trust.
+              Built with best practices for security and reliability. 
+              Your conversations and data are protected from day one.
             </p>
           </div>
         </div>
         
         <div className="text-center">
           <div className="inline-flex items-center px-6 py-3 rounded-full bg-primary/10 border border-primary/20 mb-8">
-            <span className="text-sm font-medium text-primary">✨ Trusted by 10,000+ users worldwide</span>
+            <span className="text-sm font-medium text-primary">🤖 Used by developers worldwide</span>
           </div>
           <p className="text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Join the growing community of innovators who are transforming their work with AI. 
-            From startups to enterprises, our platform scales with your ambitions.
+            Join a growing community of developers building smarter chatbots faster. 
+            From prototypes to production, our boilerplate scales with your project.
           </p>
         </div>
       </div>

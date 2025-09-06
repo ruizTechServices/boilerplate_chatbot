@@ -16,17 +16,18 @@ export default function Hero() {
         {/* Main heading */}
         <div className="animate-fade-in-up">
           <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">
-            Welcome to{" "}
+            Build Your Own{" "}
             <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent animate-pulse">
-              Amazing
+              Chatbot
             </span>
+            {" "}in Minutes
           </h1>
         </div>
 
         {/* Subtitle */}
         <div className="animate-fade-in-up animation-delay-200">
           <p className="text-lg sm:text-xl lg:text-2xl text-gray-600 dark:text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed">
-            Experience the future of innovation with our cutting-edge platform designed to transform your ideas into reality
+            Kickstart your next conversational AI project with our modern, customizable chatbot boilerplate. Fast, flexible, and production-ready.
           </p>
         </div>
 
@@ -44,7 +45,7 @@ export default function Hero() {
             size="lg"
             className="border-2 border-gray-300 dark:border-gray-600 px-8 py-3 rounded-full transition-all duration-300 transform hover:scale-105 hover:shadow-lg"
           >
-            Learn More
+            View Docs
           </Button>
         </div>
 
@@ -52,26 +53,26 @@ export default function Hero() {
         <div className="animate-fade-in-up animation-delay-600 grid grid-cols-1 md:grid-cols-3 gap-8 mt-16">
           <div className="flex flex-col items-center p-6 rounded-lg bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm border border-gray-200 dark:border-gray-700 transition-all duration-300 hover:shadow-lg hover:scale-105">
             <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mb-4">
-              <span className="text-blue-600 dark:text-blue-400 text-xl">⚡</span>
+              <span className="text-blue-600 dark:text-blue-400 text-xl">💬</span>
             </div>
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">Lightning Fast</h3>
-            <p className="text-gray-600 dark:text-gray-300 text-center">Experience blazing fast performance with our optimized platform</p>
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">Plug & Play</h3>
+            <p className="text-gray-600 dark:text-gray-300 text-center">Ready-to-use components for chat UI, message handling, and integrations.</p>
           </div>
           
           <div className="flex flex-col items-center p-6 rounded-lg bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm border border-gray-200 dark:border-gray-700 transition-all duration-300 hover:shadow-lg hover:scale-105">
             <div className="w-12 h-12 bg-purple-100 dark:bg-purple-900 rounded-full flex items-center justify-center mb-4">
-              <span className="text-purple-600 dark:text-purple-400 text-xl">🎨</span>
+              <span className="text-purple-600 dark:text-purple-400 text-xl">⚙️</span>
             </div>
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">Beautiful Design</h3>
-            <p className="text-gray-600 dark:text-gray-300 text-center">Stunning interfaces that delight users and drive engagement</p>
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">Customizable</h3>
+            <p className="text-gray-600 dark:text-gray-300 text-center">Easily adapt the look, feel, and logic to fit your brand and use case.</p>
           </div>
           
           <div className="flex flex-col items-center p-6 rounded-lg bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm border border-gray-200 dark:border-gray-700 transition-all duration-300 hover:shadow-lg hover:scale-105">
             <div className="w-12 h-12 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center mb-4">
               <span className="text-green-600 dark:text-green-400 text-xl">🚀</span>
             </div>
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">Easy to Use</h3>
-            <p className="text-gray-600 dark:text-gray-300 text-center">Intuitive design that makes complex tasks simple and enjoyable</p>
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">Production Ready</h3>
+            <p className="text-gray-600 dark:text-gray-300 text-center">Built with best practices for performance, accessibility, and scalability.</p>
           </div>
         </div>
       </div>
