@@ -17,7 +17,7 @@ export async function POST(req: Request) {
 
     return NextResponse.json({ text });
   } catch (err) {
-    console.error("/api/responses error:", err);
+    console.error("/api/openai/responses error:", err);
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
   }
 }
