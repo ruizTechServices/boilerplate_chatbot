@@ -5,10 +5,17 @@ export type AnthropicChatOptions = {
   maxOutputTokens?: number
 }
 
-function extractText(content: Array<{ type: string; text?: string }>): string {
+type TextBlockCandidate = { type?: unknown; text?: unknown }
+
+function isTextBlock(v: unknown): v is { type: 'text'; text?: string } {
+  return !!v && typeof (v as TextBlockCandidate).type === 'string' && (v as TextBlockCandidate).type === 'text'
+}
+
+function extractText(content: unknown): string {
+  if (!Array.isArray(content)) return ''
   try {
     return content
-      .map((c) => (c.type === 'text' ? c.text ?? '' : ''))
+      .map((c) => (isTextBlock(c) ? (c.text ?? '') : ''))
       .join('')
       .trim()
   } catch {
@@ -42,5 +49,5 @@ export async function getAnthropicCompletion(
     ],
   })
 
-  return extractText(resp.content as any)
+  return extractText(resp.content)
 }

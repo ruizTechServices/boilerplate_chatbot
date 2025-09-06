@@ -2,6 +2,13 @@ export const runtime = "nodejs";
 
 import { NextResponse } from "next/server";
 
+type GoogleModelsResponse = { models?: unknown };
+type GoogleModelCandidate = { name?: unknown };
+
+function isModelWithName(v: unknown): v is { name: string } {
+  return !!v && typeof (v as GoogleModelCandidate).name === "string";
+}
+
 export async function GET() {
   try {
     const dev = process.env.NODE_ENV !== "production";
@@ -29,11 +36,11 @@ export async function GET() {
       return NextResponse.json({ error: dev ? msg : "Failed to list models" }, { status: 502 });
     }
 
-    const data: any = await res.json();
+    const data: GoogleModelsResponse = await res.json();
     const models: string[] = Array.isArray(data.models)
-      ? data.models
-          .map((m: any) => (typeof m?.name === "string" ? m.name : null))
-          .filter(Boolean)
+      ? (data.models
+          .map((m: unknown) => (isModelWithName(m) ? m.name : null))
+          .filter(Boolean) as string[])
       : [];
 
     return NextResponse.json({ models });
@@ -42,3 +49,4 @@ export async function GET() {
     return NextResponse.json({ models: [] }, { status: 200 });
   }
 }
+

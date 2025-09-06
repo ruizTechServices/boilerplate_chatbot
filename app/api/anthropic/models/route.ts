@@ -3,6 +3,13 @@ export const runtime = "nodejs";
 import { NextResponse } from "next/server";
 import client from "@/lib/clients/anthropic/client";
 
+type AnthropicModelsList = { data?: unknown };
+type ModelCandidate = { id?: unknown };
+
+function isModelWithId(v: unknown): v is { id: string } {
+  return !!v && typeof (v as ModelCandidate).id === "string";
+}
+
 export async function GET() {
   try {
     const dev = process.env.NODE_ENV !== "production";
@@ -16,11 +23,12 @@ export async function GET() {
       return NextResponse.json({ error: dev ? detail : "Internal Server Error" }, { status: 500 });
     }
 
-    const list: any = await client.models.list({ limit: 20 } as any);
-    const models: string[] = Array.isArray(list?.data)
-      ? list.data
-          .map((m: any) => (typeof m?.id === "string" ? m.id : null))
-          .filter(Boolean)
+    const list = await client.models.list({ limit: 20 });
+    const data = (list as AnthropicModelsList).data;
+    const models: string[] = Array.isArray(data)
+      ? (data
+          .map((m: unknown) => (isModelWithId(m) ? m.id : null))
+          .filter(Boolean) as string[])
       : [];
 
     return NextResponse.json({ models });
@@ -34,3 +42,4 @@ export async function GET() {
     return NextResponse.json({ models: [] }, { status: 200 });
   }
 }
+
