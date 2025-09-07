@@ -13,7 +13,7 @@ export default function EmbedInput({ onSubmitText }: EmbedInputProps) {
 
   const handleEmbedding = async (text: string) => {
     try {
-      const res = await fetch('/api/embeddings', {
+      const res = await fetch('/api/openai/embeddings', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ text }),

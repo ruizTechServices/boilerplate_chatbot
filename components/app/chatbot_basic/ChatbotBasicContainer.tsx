@@ -6,37 +6,13 @@ import ChatContext, {
 } from "@/components/app/chatbot_basic/ChatContext";
 import generateUUID from "@/lib/functions/generateUUID";
 import { useEffect, useState } from "react";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { useModels } from "@/hooks/useModels";
+import ModelSelect from "@/components/app/chatbot_basic/ModelSelect";
 
 export default function ChatbotBasicContainer() {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
-  const [models, setModels] = useState<string[]>([]);
   const [selectedModel, setSelectedModel] = useState<string>("gpt-4o");
-
-  // Fetch model list once on mount
-  useEffect(() => {
-    let cancelled = false;
-    (async () => {
-      try {
-        const res = await fetch("/api/openai/models", { cache: "no-store" });
-        const data = await res.json();
-        const ids: string[] = (data?.models ?? []).filter(allowModel);
-        if (!cancelled) setModels(ids);
-      } catch {
-        const fallback = ["gpt-4o", "gpt-4o-mini"].filter(allowModel);
-        if (!cancelled) setModels(fallback);
-      }
-    })();
-    return () => {
-      cancelled = true;
-    };
-  }, []);
+  const { models, loading, error } = useModels();
 
   // Keep selectedModel synced if it's not in the list
   useEffect(() => {
@@ -44,31 +20,6 @@ export default function ChatbotBasicContainer() {
       setSelectedModel(models[0]);
     }
   }, [models, selectedModel]);
-
-  function allowModel(id: string) {
-    const blacklist = [
-      "embedding",
-      "whisper",
-      "tts",
-      "realtime",
-      "moderation",
-      "audio",
-      "clip",
-      "vision",
-      "image",
-      "computer-use",
-      "codex",
-      "dall-e",
-      "o1",
-      "o3",
-      "search-preview",
-      "transcribe",
-      "pro",
-
-    ];
-    const lower = id.toLowerCase();
-    return !blacklist.some((b) => lower.includes(b));
-  }
 
   const handleSubmitText = async (text: string) => {
     // 1) Show user message
@@ -79,10 +30,12 @@ export default function ChatbotBasicContainer() {
 
     // 3) Get assistant, append, and embed assistant text
     try {
-      const res = await fetch("/api/responses", {
+      const isAnthropic = (selectedModel || "").toLowerCase().startsWith("claude");
+      const endpoint = isAnthropic ? "/api/anthropic/chat" : "/api/openai/responses";
+      const res = await fetch(endpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: text }),
+        body: JSON.stringify({ message: text, model: selectedModel }),
       });
       if (!res.ok) throw new Error(`Responses API error: ${res.status}`);
       const data = await res.json();
@@ -97,7 +50,7 @@ export default function ChatbotBasicContainer() {
 
       // Log assistant embeddings
       try {
-        const embRes = await fetch("/api/embeddings", {
+        const embRes = await fetch("/api/openai/embeddings", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ text: assistantText }),
@@ -124,18 +77,15 @@ export default function ChatbotBasicContainer() {
         <ChatContext messages={messages} />
         <div className="w-full flex justify-center">
           <div className="w-1/2">
-            <Select value={selectedModel} onValueChange={setSelectedModel}>
-              <SelectTrigger className="w-64">
-                <SelectValue placeholder="Select model" />
-              </SelectTrigger>
-              <SelectContent>
-                {models.map((m) => (
-                  <SelectItem key={m} value={m}>
-                    {m}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <ModelSelect
+              models={models}
+              value={selectedModel}
+              onChange={setSelectedModel}
+              disabled={loading}
+            />
+            {error && (
+              <p className="mt-2 text-sm text-red-500">{error}</p>
+            )}
           </div>
         </div>
         <EmbedInput onSubmitText={handleSubmitText} />
@@ -143,3 +93,4 @@ export default function ChatbotBasicContainer() {
     </div>
   );
 }
+
