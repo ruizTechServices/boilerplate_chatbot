@@ -42,9 +42,22 @@ export async function getHuggingfaceChat(
     
     throw new Error('No response content from Huggingface')
   } catch (error) {
+    // Check for common error patterns
+    const errorMessage = error instanceof Error ? error.message : String(error)
+    
+    // Check for GGUF/GGML format errors
+    if (model.toLowerCase().includes('gguf') || model.toLowerCase().includes('ggml')) {
+      throw new Error('GGUF/GGML quantized models are not supported by the Hugging Face Inference API. These formats are meant for local inference only.')
+    }
+    
+    // Check for provider errors
+    if (errorMessage.includes('Auto selected provider: undefined')) {
+      throw new Error(`Model "${model}" is not available through the Hugging Face Inference API. Please select a different model.`)
+    }
+    
     if (error instanceof Error) {
       throw error
     }
-    throw new Error(String(error))
+    throw new Error(errorMessage)
   }
 }

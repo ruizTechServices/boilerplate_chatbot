@@ -3,6 +3,8 @@ export const runtime = "nodejs";
 import { NextResponse } from "next/server";
 
 // Predefined list of popular Huggingface models that work well with the InferenceClient
+// NOTE: GGUF, GGML, and other quantized formats are NOT supported by the HF Inference API
+// These formats are meant for local inference only (e.g., with llama.cpp)
 const AVAILABLE_MODELS = [
   "meta-llama/Llama-3.1-70B-Instruct",
   "meta-llama/Llama-3.1-8B-Instruct",
