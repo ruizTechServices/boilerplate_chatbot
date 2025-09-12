@@ -24,8 +24,9 @@ const AVAILABLE_MODELS = [
   "bigcode/starcoder2-15b-instruct-v0.1",
   "Qwen/Qwen2.5-72B-Instruct",
   "Qwen/Qwen2.5-7B-Instruct",
-  "deepseek-ai/DeepSeek-Coder-V2-Instruct",
-  "openai/gpt-oss-20b"
+  "openai/gpt-oss-20b",
+  "openai/gpt-oss-120b",
+  "deepseek-ai/DeepSeek-Prover-V2-671B"
 ];
 
 export async function GET() {
