@@ -1,52 +1,36 @@
-// lib/functions/xai/chat.ts
-import type { RequestInit } from "next/dist/server/web/spec-extension/request";
+import xaiClient from "@/lib/clients/xai/client";
 
-export type XaiChatOptions = {
-  model?: string;
-  systemPrompt?: string;
-  userPrompt: string;
-};
+export interface XaiChatOptions {
+  system?: string;
+  maxOutputTokens?: number;
+}
 
-export async function getXaiChatResponse(
-  options: XaiChatOptions,
-  fetchOptions?: RequestInit
+/**
+ * Send a chat request to the XAI API using the OpenAI-compatible client.
+ *
+ * @param message - The user's message
+ * @param model - Model name (e.g. "grok-2-latest", "grok-1")
+ * @param options - Optional parameters (system prompt, max tokens)
+ * @returns The assistant's response text
+ */
+export async function getXaiCompletion(
+  message: string,
+  model = "grok-2-latest",
+  options?: XaiChatOptions
 ): Promise<string> {
-  const endpoint = "https://api.x.ai/v1/chat/completions";
-
-  try {
-    const res = await fetch(endpoint, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${process.env.XAI_API_KEY}`, // 👈 must be set in .env
-      },
-      body: JSON.stringify({
-        model: options.model ?? "grok-4",
-        messages: [
-          {
-            role: "system",
-            content: options.systemPrompt ?? "You are a PhD-level mathematician.",
-          },
-          {
-            role: "user",
-            content: options.userPrompt,
-          },
-        ],
-      }),
-      ...fetchOptions,
-    });
-
-    if (!res.ok) {
-      throw new Error(`XAI Chat API error: ${res.status} ${await res.text()}`);
-    }
-
-    const data = (await res.json()) as {
-      choices: { message: { role: string; content: string } }[];
-    };
-
-    return data.choices?.[0]?.message?.content ?? "";
-  } catch (err) {
-    console.error("getXaiChatResponse error:", err);
-    return "";
+  const messages: Array<{ role: "system" | "user"; content: string }> = [];
+  
+  if (options?.system) {
+    messages.push({ role: "system", content: options.system });
   }
+  
+  messages.push({ role: "user", content: message });
+
+  const chatCompletion = await xaiClient.chat.completions.create({
+    model,
+    messages,
+    ...(options?.maxOutputTokens && { max_tokens: options.maxOutputTokens }),
+  });
+
+  return chatCompletion.choices[0]?.message?.content || "";
 }
