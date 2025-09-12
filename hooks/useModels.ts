@@ -11,7 +11,7 @@ export type UseModelsOptions = {
 
 export function useModels(opts: UseModelsOptions = {}) {
   const {
-    // When fetchUrl is omitted, we will fetch from both providers and merge
+    // When fetchUrl is omitted, we will fetch from all providers and merge
     fetchUrl,
     filter = allowModel,
     fallback = ["gpt-4o", "gpt-4o-mini"].filter((id) => allowModel(id)),
@@ -28,10 +28,17 @@ export function useModels(opts: UseModelsOptions = {}) {
       try {
         setLoading(true);
         setError(null);
-        // Determine which URLs to hit: a single one if provided, otherwise both providers
+        // Determine which URLs to hit: a single one if provided, otherwise all providers
         const urls = fetchUrl
           ? [fetchUrl]
-          : ["/api/openai/models", "/api/anthropic/models"];
+          : [
+              "/api/openai/models", 
+              "/api/anthropic/models",
+              "/api/google/models",
+              "/api/mistral/models",
+              "/api/huggingface/models",
+              "/api/xai/models"
+            ];
 
         const results = await Promise.allSettled(
           urls.map((u) =>

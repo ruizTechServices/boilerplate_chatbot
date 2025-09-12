@@ -14,6 +14,28 @@ export default function ChatbotBasicContainer() {
   const [selectedModel, setSelectedModel] = useState<string>("gpt-4o");
   const { models, loading, error } = useModels();
 
+  // Helper function to determine the correct API endpoint based on model name
+  const getEndpointForModel = (model: string): string => {
+    const modelLower = model.toLowerCase();
+    
+    if (modelLower.startsWith("claude")) {
+      return "/api/anthropic/chat";
+    } else if (modelLower.startsWith("gpt") || modelLower.startsWith("o1")) {
+      return "/api/openai/responses";
+    } else if (modelLower.startsWith("gemini") || modelLower.includes("gecko")) {
+      return "/api/google/chat";
+    } else if (modelLower.startsWith("mistral")) {
+      return "/api/mistral/chat";
+    } else if (modelLower.startsWith("meta-llama") || modelLower.startsWith("llama") || modelLower.startsWith("microsoft/phi")) {
+      return "/api/huggingface/chat";
+    } else if (modelLower.startsWith("grok")) {
+      return "/api/xai/chat";
+    } else {
+      // Default fallback
+      return "/api/openai/responses";
+    }
+  };
+
   // Keep selectedModel synced if it's not in the list
   useEffect(() => {
     if (models.length && !models.includes(selectedModel)) {
@@ -30,8 +52,7 @@ export default function ChatbotBasicContainer() {
 
     // 3) Get assistant, append, and embed assistant text
     try {
-      const isAnthropic = (selectedModel || "").toLowerCase().startsWith("claude");
-      const endpoint = isAnthropic ? "/api/anthropic/chat" : "/api/openai/responses";
+      const endpoint = getEndpointForModel(selectedModel);
       const res = await fetch(endpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
