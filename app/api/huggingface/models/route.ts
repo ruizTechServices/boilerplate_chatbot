@@ -15,7 +15,6 @@ const AVAILABLE_MODELS = [
   "microsoft/Phi-3-mini-4k-instruct",
   "google/gemma-2-9b-it",
   "google/gemma-2-2b-it",
-  "NousResearch/Nous-Hermes-2-Mixtral-8x7B-DPO",
   "HuggingFaceH4/zephyr-7b-beta",
   "codellama/CodeLlama-34b-Instruct-hf",
   "codellama/CodeLlama-13b-Instruct-hf",
@@ -25,7 +24,8 @@ const AVAILABLE_MODELS = [
   "bigcode/starcoder2-15b-instruct-v0.1",
   "Qwen/Qwen2.5-72B-Instruct",
   "Qwen/Qwen2.5-7B-Instruct",
-  "deepseek-ai/DeepSeek-Coder-V2-Instruct"
+  "deepseek-ai/DeepSeek-Coder-V2-Instruct",
+  "openai/gpt-oss-20b"
 ];
 
 export async function GET() {
