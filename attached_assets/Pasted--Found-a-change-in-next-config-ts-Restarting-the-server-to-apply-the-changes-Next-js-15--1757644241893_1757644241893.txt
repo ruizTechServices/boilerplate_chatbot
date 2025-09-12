@@ -1,0 +1,166 @@
+ ⚠ Found a change in next.config.ts. Restarting the server to apply the changes...
+   ▲ Next.js 15.4.5
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.80.1:3000
+   - Environments: .env.local, .env
+
+ ✓ Starting...
+ ✓ Ready in 2.2s
+ ○ Compiling /basic ...
+ ✓ Compiled /basic in 2.9s (825 modules)
+ GET /basic 200 in 3450ms
+ ○ Compiling /favicon.ico ...
+ ✓ Compiled /api/mistral/models in 801ms (501 modules)
+ ✓ Compiled in 823ms (342 modules)
+[dotenv@17.2.1] injecting env (0) from .env -- tip: ⚙️  override existing  env vars with { override: true }
+[dotenv@17.2.1] injecting env (0) from .env -- tip: ⚙️  load multiple .envv files with { path: ['.env.local', '.env'] }
+ GET /favicon.ico 200 in 3175ms
+ GET /api/huggingface/models 200 in 2685ms
+[dotenv@17.2.1] injecting env (0) from .env -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+ GET /api/anthropic/models 200 in 2886ms
+ GET /api/mistral/models 200 in 3036ms
+ GET /api/google/models 200 in 3072ms
+ ○ Compiling /api/xai/models ...
+ ✓ Compiled /api/xai/models in 565ms (1461 modules)
+ GET /api/openai/models 200 in 3437ms
+ GET /favicon.ico 200 in 424ms
+ GET /basic 200 in 738ms
+ GET /api/xai/models 200 in 857ms
+ ○ Compiling /api/openai/responses ...
+ ✓ Compiled /api/openai/responses in 513ms (1467 modules)
+[dotenv@17.2.1] injecting env (0) from .env -- tip: 🛠️  run anywhere with  `dotenvx run -- yourcommand`
+/api/openai/responses error: Error: 400 The requested model 'models/gemini-2.5-flash-lite' does not exist.
+    at async getOpenAICompletion (lib\functions\openai\responses.ts:21:26)
+    at async POST (app\api\openai\responses\route.ts:13:17)
+  19 |   }
+  20 |
+> 21 |   const { output_text } = await openai.responses.create(payload)   
+     |                          ^
+  22 |   return output_text
+  23 | }
+  24 | {
+  status: 400,
+  headers: Headers {
+    date: 'Fri, 12 Sep 2025 02:25:09 GMT',
+    'content-type': 'application/json',
+    'content-length': '194',
+    connection: 'keep-alive',
+    'openai-version': '2020-10-01',
+    'openai-organization': 'user-gbsdnjezaclqjii1zfnjyfhn',
+    'openai-project': 'proj_fqQifMAkqq4tSZIkDIM8CNLJ',
+    'x-request-id': 'req_028c847cb801af0142f20269fa71f886',
+    'openai-processing-ms': '61',
+    'x-envoy-upstream-service-time': '63',
+    'strict-transport-security': 'max-age=31536000; includeSubDomains; preload',
+    'cf-cache-status': 'DYNAMIC',
+    'set-cookie': '__cf_bm=Dj5MMF8ymSmW.sb4gQIPP2Qf0ByffcgK3XfgGcjKQrw-1757643909-1.0.1.1-vO6ugD__MLW_Cpttbs4PPFcwEd.er2JRGP1Zukcn3f5kZWtpzsADPz3cfg5s2x90Bw6U73rZ9imgdxWqFvzcFRANuFDvtU1u5KdlJRavmyQ; path=/; expires=Fri, 12-Sep-25 02:55:09 GMT; domain=.api.openai.com; HttpOnly; Secure; SameSite=None, _cfuvid=Fd7VOyp6w1elh996C8JZ9EDGrjyciSd2pMPWHnmRUvg-1757643909871-0.0.1.1-604800000; path=/; domain=.api.openai.com; HttpOnly; Secure; SameSite=None',
+    'x-content-type-options': 'nosniff',
+    server: 'cloudflare',
+    'cf-ray': '97dbf3e26ff1bdbc-EWR',
+    'alt-svc': 'h3=":443"; ma=86400'
+  },
+  requestID: 'req_028c847cb801af0142f20269fa71f886',
+  error: [Object],
+  code: 'model_not_found',
+  param: 'model',
+  type: 'invalid_request_error'
+}
+ POST /api/openai/responses 500 in 1158ms
+ POST /api/openai/embeddings 200 in 1312ms
+ ✓ Compiled /api/mistral/chat in 365ms (1470 modules)
+[dotenv@17.2.1] injecting env (0) from .env -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+ POST /api/openai/embeddings 200 in 949ms
+ POST /api/mistral/chat 200 in 1519ms
+[dotenv@17.2.1] injecting env (0) from .env -- tip: ⚙️  suppress all logs  with { quiet: true }
+ POST /api/openai/embeddings 200 in 171ms
+ ✓ Compiled /api/anthropic/chat in 268ms (1457 modules)
+[dotenv@17.2.1] injecting env (0) from .env -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+ POST /api/openai/embeddings 200 in 756ms
+ POST /api/anthropic/chat 200 in 2041ms
+[dotenv@17.2.1] injecting env (0) from .env -- tip: ⚙️  specify custom .ennv file path with { path: '/custom/path/.env' }
+ POST /api/openai/embeddings 200 in 800ms
+ POST /api/openai/embeddings 200 in 573ms
+ POST /api/openai/responses 200 in 2195ms
+ POST /api/openai/embeddings 200 in 223ms
+/api/openai/responses error: Error: 400 The requested model 'models/gemini-2.5-flash-lite' does not exist.
+    at async getOpenAICompletion (lib\functions\openai\responses.ts:21:26)
+    at async POST (app\api\openai\responses\route.ts:13:17)
+  19 |   }
+  20 |
+> 21 |   const { output_text } = await openai.responses.create(payload)   
+     |                          ^
+  22 |   return output_text
+  23 | }
+  24 | {
+  status: 400,
+  headers: Headers {
+    date: 'Fri, 12 Sep 2025 02:27:03 GMT',
+    'content-type': 'application/json',
+    'content-length': '194',
+    connection: 'keep-alive',
+    'openai-version': '2020-10-01',
+    'openai-organization': 'user-gbsdnjezaclqjii1zfnjyfhn',
+    'openai-project': 'proj_fqQifMAkqq4tSZIkDIM8CNLJ',
+    'x-request-id': 'req_46681c9233e161e71c9fc14954b083b2',
+    'openai-processing-ms': '47',
+    'x-envoy-upstream-service-time': '49',
+    'strict-transport-security': 'max-age=31536000; includeSubDomains; preload',
+    'cf-cache-status': 'DYNAMIC',
+    'set-cookie': '__cf_bm=JAN5wGGvxcdO3srHuycT4oqELag_EFvHC8E6CWE7EL0-1757644023-1.0.1.1-.uRxAoCeOypcTK_iohVYLSB.ve2rF6o8Sn7lK3pUWxegBDtWLUiR91QUSY0jfEhQey97yr.PHln1olUBh_ngv7xe5YeMPT9RThATis2sQTg; path=/; expires=Fri, 12-Sep-25 02:57:03 GMT; domain=.api.openai.com; HttpOnly; Secure; SameSite=None, _cfuvid=O2orb5hyNJGoMwBW.ha9RuBKF7WjIvA4W8Sb4yea9N4-1757644023261-0.0.1.1-604800000; path=/; domain=.api.openai.com; HttpOnly; Secure; SameSite=None',
+    'x-content-type-options': 'nosniff',
+    server: 'cloudflare',
+    'cf-ray': '97dbf6a8ce5ef52c-EWR',
+    'alt-svc': 'h3=":443"; ma=86400'
+  },
+  requestID: 'req_46681c9233e161e71c9fc14954b083b2',
+  error: [Object],
+  code: 'model_not_found',
+  param: 'model',
+  type: 'invalid_request_error'
+}
+ POST /api/openai/responses 500 in 258ms
+ POST /api/openai/embeddings 200 in 869ms
+ POST /api/openai/embeddings 200 in 506ms
+ ○ Compiling /api/xai/chat ...
+ ✓ Compiled /api/xai/chat in 517ms (944 modules)
+ POST /api/xai/chat 200 in 1251ms
+[dotenv@17.2.1] injecting env (0) from .env -- tip: 🛠️  run anywhere with  `dotenvx run -- yourcommand`
+ POST /api/openai/embeddings 200 in 311ms
+/api/openai/responses error: Error: 400 The requested model 'Qwen/Qwen2.5-7B-Instruct' does not exist.
+    at async getOpenAICompletion (lib\functions\openai\responses.ts:21:26)
+    at async POST (app\api\openai\responses\route.ts:13:17)
+  19 |   }
+  20 |
+> 21 |   const { output_text } = await openai.responses.create(payload)   
+     |                          ^
+  22 |   return output_text
+  23 | }
+  24 | {
+  status: 400,
+  headers: Headers {
+    date: 'Fri, 12 Sep 2025 02:27:59 GMT',
+    'content-type': 'application/json',
+    'content-length': '190',
+    connection: 'keep-alive',
+    'openai-version': '2020-10-01',
+    'openai-organization': 'user-gbsdnjezaclqjii1zfnjyfhn',
+    'openai-project': 'proj_fqQifMAkqq4tSZIkDIM8CNLJ',
+    'x-request-id': 'req_01de627adf9ce3e3147d004d2dad83c3',
+    'openai-processing-ms': '35',
+    'x-envoy-upstream-service-time': '770',
+    'strict-transport-security': 'max-age=31536000; includeSubDomains; preload',
+    'cf-cache-status': 'DYNAMIC',
+    'set-cookie': '__cf_bm=yi49SIxgxDL6NSm3TaN.z_wXiAFaE1nYtuZldZColwM-1757644079-1.0.1.1-zJbGNfkcxr3dhZ3ex7rD7VV2Y88exRVDyv3B6UuE5CJowDe_ZhHJ8TQFP7e4LYZXYcI6QxSdZsOGojKC1YD9fcIc26uKJMPf5x9y8j7d7PU; path=/; expires=Fri, 12-Sep-25 02:57:59 GMT; domain=.api.openai.com; HttpOnly; Secure; SameSite=None, _cfuvid=2Seenr7Vi21Y8eAmMweOkcvXXyP5d_u2q51Kt.f6_mw-1757644079159-0.0.1.1-604800000; path=/; domain=.api.openai.com; HttpOnly; Secure; SameSite=None',
+    'x-content-type-options': 'nosniff',
+    server: 'cloudflare',
+    'cf-ray': '97dbf801aeee0f47-EWR',
+    'alt-svc': 'h3=":443"; ma=86400'
+  },
+  requestID: 'req_01de627adf9ce3e3147d004d2dad83c3',
+  error: [Object],
+  code: 'model_not_found',
+  param: 'model',
+  type: 'invalid_request_error'
+}
+ POST /api/openai/responses 500 in 971ms
+ POST /api/openai/embeddings 200 in 1299ms

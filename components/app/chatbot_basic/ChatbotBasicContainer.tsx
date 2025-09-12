@@ -18,22 +18,54 @@ export default function ChatbotBasicContainer() {
   const getEndpointForModel = (model: string): string => {
     const modelLower = model.toLowerCase();
     
-    if (modelLower.startsWith("claude")) {
+    // Anthropic models
+    if (modelLower.includes("claude")) {
       return "/api/anthropic/chat";
-    } else if (modelLower.startsWith("gpt") || modelLower.startsWith("o1")) {
-      return "/api/openai/responses";
-    } else if (modelLower.startsWith("gemini") || modelLower.includes("gecko")) {
+    }
+    
+    // Google Gemini models (can have "models/" prefix)
+    if (modelLower.includes("gemini") || modelLower.includes("gecko") || modelLower.includes("bison")) {
       return "/api/google/chat";
-    } else if (modelLower.startsWith("mistral")) {
+    }
+    
+    // Mistral models
+    if (modelLower.includes("mistral") || modelLower.includes("mixtral")) {
       return "/api/mistral/chat";
-    } else if (modelLower.startsWith("meta-llama") || modelLower.startsWith("llama") || modelLower.startsWith("microsoft/phi")) {
-      return "/api/huggingface/chat";
-    } else if (modelLower.startsWith("grok")) {
+    }
+    
+    // XAI Grok models
+    if (modelLower.includes("grok")) {
       return "/api/xai/chat";
-    } else {
-      // Default fallback
+    }
+    
+    // Huggingface models - check for common patterns
+    if (modelLower.includes("llama") || 
+        modelLower.includes("phi") || 
+        modelLower.includes("zephyr") ||
+        modelLower.includes("codellama") ||
+        modelLower.includes("deepseek") ||
+        modelLower.includes("qwen") ||
+        modelLower.includes("nous-hermes") ||
+        modelLower.includes("starling") ||
+        modelLower.includes("neural-chat") ||
+        modelLower.includes("openchat") ||
+        modelLower.includes("openhermes") ||
+        modelLower.includes("dolphin") ||
+        modelLower.includes("wizardcoder") ||
+        modelLower.includes("phind") ||
+        modelLower.includes("vicuna") ||
+        modelLower.includes("yi-") ||
+        modelLower.includes("/")) {  // Many HF models have org/model format
+      return "/api/huggingface/chat";
+    }
+    
+    // OpenAI models (including GPT and o1 series)
+    if (modelLower.includes("gpt") || modelLower.includes("o1") || modelLower.includes("text-davinci")) {
       return "/api/openai/responses";
     }
+    
+    // Default fallback to OpenAI
+    return "/api/openai/responses";
   };
 
   // Keep selectedModel synced if it's not in the list
